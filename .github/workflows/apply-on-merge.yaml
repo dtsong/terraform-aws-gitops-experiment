@@ -52,7 +52,7 @@ jobs:
       - name: Initialize Terraform
         run: |
           cd terraform/
-          terraform init -backend-config=backend.conf back-input=false
+          terraform init -backend-config=backend.conf
 
       - name: Plan Terraform
         id: plan
