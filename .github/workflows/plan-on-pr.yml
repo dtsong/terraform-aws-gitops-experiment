@@ -26,13 +26,13 @@ jobs:
     env:
       TF_VAR_allowed_account_id: ${{ secrets.ALLOWED_ACCOUNT_ID }}
     runs-on: ubuntu-20.04
-    strategy:
-      fail-fast: false
-      matrix:
-        path:
-          - dev
-          - stage
-          - prod
+    # strategy:
+    #   fail-fast: false
+    #   matrix:
+    #     path:
+    #       - dev
+    #       - stage
+    #       - prod
 
     steps:
       - name: Check out code
@@ -46,13 +46,13 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-region: us-east-1
+          aws-region: us-west-2
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Initialize Terraform
         run: |
-          cd terraform/${{ matrix.path }}
+          cd terraform/
           terraform init -input=false
 
       - name: Plan Terraform
@@ -85,7 +85,7 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           repo-token-user-login: 'github-actions[bot]'
           message: |
-            ## ${{ matrix.path }} plan
+            ## terraform plan
             ```diff
             ${{ env.PLAN }}
             ```

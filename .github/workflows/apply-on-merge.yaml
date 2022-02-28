@@ -25,13 +25,13 @@ jobs:
     env:
       TF_VAR_allowed_account_id: ${{ secrets.ALLOWED_ACCOUNT_ID }}
     runs-on: ubuntu-20.04
-    strategy:
-      fail-fast: false
-      matrix:
-        path:
-          - dev
-          - stage
-          - prod
+    # strategy:
+    #   fail-fast: false
+    #   matrix:
+    #     path:
+    #       - dev
+    #       - stage
+    #       - prod
 
     steps:
       - name: Check out code
@@ -51,14 +51,14 @@ jobs:
 
       - name: Initialize Terraform
         run: |
-          cd terraform/${{ matrix.path }}
+          cd terraform/
           terraform init -input=false
 
       - name: Plan Terraform
         id: plan
         continue-on-error: true
         run: |
-          cd terraform/${{ matrix.path }}
+          cd terraform/
           terraform plan -input=false -no-color -out=tfplan \
           && terraform show -no-color tfplan
 
@@ -84,7 +84,7 @@ jobs:
         id: apply
         continue-on-error: true
         run: |
-          cd terraform/${{ matrix.path }}
+          cd terraform/
           terraform apply \
             -input=false \
             -no-color \
@@ -97,7 +97,7 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           repo-token-user-login: 'github-actions[bot]'
           message: |
-            Applying **${{ matrix.path }}**:
+            Applying Terraform**:
 
             ```diff
             ${{ env.PLAN }}
@@ -114,7 +114,7 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           repo-token-user-login: 'github-actions[bot]'
           message: |
-            Plan failed for **${{ matrix.path }}**:
+            Plan failed for Terraform**:
 
             ```
             ${{ steps.plan.outputs.stderr }}
@@ -127,7 +127,7 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           repo-token-user-login: 'github-actions[bot]'
           message: |
-            Apply failed for **${{ matrix.path }}**:
+            Apply failed for Terraform**:
 
             ```
             ${{ steps.apply.outputs.stderr }}
