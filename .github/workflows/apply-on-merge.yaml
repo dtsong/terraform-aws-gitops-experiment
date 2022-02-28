@@ -52,14 +52,14 @@ jobs:
       - name: Initialize Terraform
         run: |
           cd terraform/
-          terraform init -input=false
+          terraform init -backend-config=backend.conf back-input=false
 
       - name: Plan Terraform
         id: plan
         continue-on-error: true
         run: |
           cd terraform/
-          terraform plan -input=false -no-color -out=tfplan \
+          terraform plan -no-color -out=tfplan \
           && terraform show -no-color tfplan
 
       # Sed is taking all lines that begin with one or more spaces followed by a `+` or `-`.
