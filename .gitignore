@@ -1,3 +1,6 @@
+# Local variable script
+load-vars.sh
+
 # Local .terraform directories
 **/.terraform/*
 
