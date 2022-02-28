@@ -17,7 +17,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "s3Bucket" {
-  bucket = var.s3_application_bucket_name
+  bucket = "acme-test-application"
   acl    = "public-read"
 
   policy = <<EOF
@@ -30,7 +30,7 @@ resource "aws_s3_bucket" "s3Bucket" {
              "s3:GetObject"
           ],
          "effect" : "Allow",
-         "resource" : "arn:aws:s3:::${var.s3_application_bucket_name}/*",
+         "resource" : "arn:aws:s3:::acme-test-application/*",
          "principal" : "*"
       }
     ]
