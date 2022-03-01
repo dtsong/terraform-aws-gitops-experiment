@@ -22,16 +22,15 @@ resource "aws_s3_bucket" "s3Bucket" {
 
   policy = <<EOF
 {
-   "id" : "MakePublic",
-   "version" : "2012-10-17",
-   "statement" : [
+   "Version" : "2012-10-17",
+   "Statement" : [
       {
-         "action" : [
+         "Action" : [
              "s3:GetObject"
           ],
-         "effect" : "Allow",
-         "resource" : "arn:aws:s3:::acme-test-application/*",
-         "principal" : "*"
+         "Effect" : "Allow",
+         "Resource" : "arn:aws:s3:::acme-test-application/*",
+         "Principal" : "*"
       }
     ]
   }
