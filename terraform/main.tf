@@ -9,7 +9,7 @@ terraform {
   required_version = ">=0.14.9"
 
   backend "s3" {
-    key    = "global/s3/terraform.tfstate"
+    key = "global/s3/terraform.tfstate"
   }
 }
 
